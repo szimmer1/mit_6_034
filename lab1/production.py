@@ -132,7 +132,7 @@ class IF(object):
         self._action = action
         self._delete_clause = delete_clause
 
-    def apply(self, rules, apply_only_one=False, verbose=False):
+    def apply(self, data, apply_only_one=False, verbose=False):
         """
         Return a new set of data updated by the conditions and
         actions of this IF statement.
@@ -141,33 +141,35 @@ class IF(object):
         return immediately instead of continuing. This is the
         behavior described in class, but it is slower.
         """
-        new_rules = set(rules)
-        old_rules_count = len(new_rules)
+        new_data = set(data)
+        old_data_count = len(new_data)
+
+        # bindings is a Generator
         bindings = RuleExpression().test_term_matches(
-            self._conditional, new_rules)
+            self._conditional, new_data)
 
         for k in bindings:
             for a in self._action:
-                new_rules.add( populate(a, k) )
-                if len(new_rules) != old_rules_count:
+                new_data.add( populate(a, k) )
+                if len(new_data) != old_data_count:
                     if verbose:
                         print "Rule:", self
                         print "Added:", populate(a, k)
                     if apply_only_one:
-                        return tuple(sorted(new_rules))
+                        return tuple(sorted(new_data))
             for d in self._delete_clause:
                 try:
-                    new_rules.remove( populate(d, k) )
-                    if len(new_rules) != old_rules_count:
+                    new_data.remove( populate(d, k) )
+                    if len(new_data) != old_data_count:
                         if verbose:
                             print "Rule:", self
                             print "Deleted:", populate(d, k)
                         if apply_only_one:
-                            return tuple(sorted(new_rules))
+                            return tuple(sorted(new_data))
                 except KeyError:
                     pass
                     
-        return tuple(sorted(new_rules)) # Uniquify and sort the
+        return tuple(sorted(new_data)) # Uniquify and sort the
                                         # output list
 
 
@@ -212,28 +214,28 @@ class RuleExpression(list):
 
     __repr__ = __str__
         
-    def test_term_matches(self, condition, rules, 
+    def test_term_matches(self, condition, data,
                           context_so_far = None):
         """
         Given an expression which might be just a string, check
-        it against the rules.
+        it against the data.
         """
-        rules = set(rules)
+        data = set(data)
         if context_so_far == None: context_so_far = {}
 
         # Deal with nesting first If we're a nested term, we
         # already have a test function; use it
         if not isinstance(condition, basestring):
-            return condition.test_matches(rules, context_so_far)
+            return condition.test_matches(data, context_so_far)
 
         # Hm; no convenient test function here
         else:
             return self.basecase_bindings(condition, 
-                                          rules, context_so_far)
+                                          data, context_so_far)
 
-    def basecase_bindings(self, condition, rules, context_so_far):
-        for rule in rules:
-            bindings = match(condition, rule)
+    def basecase_bindings(self, condition, data, context_so_far):
+        for datapoint in data:
+            bindings = match(condition, datapoint)
             if bindings is None: continue
             try:
                 context = NoClobberDict(context_so_far)

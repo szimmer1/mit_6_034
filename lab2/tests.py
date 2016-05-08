@@ -236,6 +236,7 @@ if do_dfs:
     ### TEST 11-optional ###
 
     def dfs_1_getargs():
+        NEWGRAPH1.reset()
         return [ NEWGRAPH1, 'S', 'H' ]
 
     def dfs_1_testanswer(val, original_val = None):
@@ -253,6 +254,7 @@ if do_dfs:
     ### TEST 12-optional ###
 
     def dfs_2_getargs():
+        NEWGRAPH2.reset()
         return [ NEWGRAPH2, 'A', 'G' ]
 
     def dfs_2_testanswer(val, original_val = None):
@@ -270,6 +272,7 @@ if do_dfs:
     ### TEST 13-optional ###
 
     def dfs_3_getargs():
+        NEWGRAPH3.reset()
         return [ NEWGRAPH3, 'S', 'S' ]
 
     def dfs_3_testanswer(val, original_val = None):
@@ -287,6 +290,7 @@ if do_dfs:
     ### TEST 14-optional ###
 
     def dfs_4_getargs():
+        SAQG.reset()
         return [ SAQG, 'S', 'G']
 
     def dfs_4_testanswer(val, original_val = None):
@@ -352,6 +356,7 @@ make_test(type = 'FUNCTION',
 ### TEST 10 ###
 
 def hill_climbing_1_getargs():
+    NEWGRAPH1.reset()
     return [ NEWGRAPH1, 'S', 'G' ]
 
 def hill_climbing_1_testanswer(val, original_val = None):
@@ -368,6 +373,7 @@ make_test(type = 'FUNCTION',
 ### TEST 11 ###
 
 def hill_climbing_2_getargs():
+    NEWGRAPH1.reset()
     return [ NEWGRAPH1, 'F', 'G' ]
 
 def hill_climbing_2_testanswer(val, original_val = None):
@@ -384,6 +390,7 @@ make_test(type = 'FUNCTION',
 ### TEST 12 ###
 
 def hill_climbing_3_getargs():
+    NEWGRAPH1.reset()
     return [ NEWGRAPH1, 'H', 'G' ]
 
 def hill_climbing_3_testanswer(val, original_val = None):
@@ -400,6 +407,7 @@ make_test(type = 'FUNCTION',
 ### TEST 13 ###
 
 def hill_climbing_4_getargs():
+    NEWGRAPH2.reset()
     return [ NEWGRAPH2, 'G', 'H' ]
 
 def hill_climbing_4_testanswer(val, original_val = None):
@@ -416,6 +424,7 @@ make_test(type = 'FUNCTION',
 ### TEST 14 ###
 
 def hill_climbing_5_getargs():
+    NEWGRAPH2.reset()
     return [ NEWGRAPH2, 'E', 'A' ]
 
 def hill_climbing_5_testanswer(val, original_val = None):

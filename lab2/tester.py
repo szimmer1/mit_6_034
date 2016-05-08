@@ -1,3 +1,4 @@
+#!/usr/local/bin/python
 # Fall 2012 6.034 Lab 2: Search
 
 import xmlrpclib

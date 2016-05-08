@@ -37,6 +37,7 @@ class Graph:
         else:
             self.edges = []
         self.nodes = nodes
+        self.marked = set()
         if not nodes:
             self.nodes = list(set([edge.node1 for edge in self.edges] + 
                                   [edge.node2 for edge in self.edges]))
@@ -61,6 +62,18 @@ class Graph:
         for start in self.nodes:
             for end in self.nodes:
                 assert self.get_heuristic(start,end) >= 0
+
+    def mark_node(self, node):
+        assert node in self.nodes, "No node "+str(node)+" in graph "+str(self)
+        self.marked.add(node)
+        return self.marked
+
+    def is_marked(self, node):
+        assert node in self.nodes, "No node "+str(node)+" in graph "+str(self)
+        return node in self.marked
+
+    def reset(self):
+        self.marked = set()
 
     def get_connected_nodes(self, node):
         """

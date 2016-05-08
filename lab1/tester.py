@@ -1,3 +1,5 @@
+#!/usr/bin/python2.7
+
 import xmlrpclib
 import traceback
 import sys
